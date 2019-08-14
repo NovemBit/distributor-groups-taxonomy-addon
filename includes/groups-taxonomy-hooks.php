@@ -9,7 +9,6 @@ function setup() {
 	add_action(
 		'plugins_loaded',
 		function () {
-			add_action( 'dt_push_groups_hook', __NAMESPACE__ . '\dt_push_groups' );
 			add_filter( 'cron_schedules', __NAMESPACE__ . '\add_cron_interval' );
 		}
 	);
@@ -127,86 +126,6 @@ function push_connection( $connection, $post ) {
 		}
 	}
 	update_post_meta( intval( $post->ID ), 'dt_connection_map', $connection_map );
-}
-
-/**
- * Perform scheduled push groups
- */
-function dt_push_groups() {
-	$query = new \WP_Query(
-		array(
-			'post_type'      => \DT\NbAddon\GroupsTaxonomy\Utils\get_distributable_custom_post_types(),
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-			'posts_per_page' => 20,
-			'meta_query'     => array(
-				'relation' => 'AND',
-				array(
-					'key'     => 'dt_connection_groups_pushing',
-					'compare' => 'EXISTS',
-				),
-			),
-		)
-	);
-
-	$all_posts = $query->posts;
-	if ( ! empty( $all_posts ) ) {
-		foreach ( $all_posts as $post ) {
-			$connection_map = get_post_meta( $post->ID, 'dt_connection_groups_pushing', true );
-			if ( empty( $connection_map ) ) {
-				delete_post_meta( $post->ID, 'dt_connection_groups_pushing' );
-				continue;
-			} elseif ( ! is_array( $connection_map ) ) {
-				$connection_map = array( $connection_map );
-			}
-			$successed_groups = get_post_meta( $post->ID, 'dt_connection_groups_pushed', true );
-			if ( empty( $successed_groups ) || null === $successed_groups ) {
-				$successed_groups = array();
-			}
-			foreach ( $connection_map as $group ) {
-
-				$index                = get_term_by( 'slug', $group, 'dt_ext_connection_group' )->term_id;
-				$push_connections = get_connections( $group );
-				if ( empty( $push_connections ) ) {
-					$key = array_search( $group, $connection_map, true );
-					if ( ! in_array( $group, $successed_groups, true ) ) {
-						$successed_groups[] = $group;
-						update_post_meta( $post->ID, 'dt_connection_groups_pushed', $successed_groups );
-					}
-					if ( false !== $key || null !== $key ) {
-						unset( $connection_map[ $key ] );
-					}
-					continue;
-				}
-				$pushed_connections_map = get_post_meta( $post->ID, 'dt_connection_map', true );
-
-				foreach ( $push_connections as $con ) {
-					if ( empty( $pushed_connections_map ) || ! isset( $pushed_connections_map['external'] ) || ! in_array( $con['id'], array_keys( $pushed_connections_map['external'] ), true ) ) {
-						push_connection( $con, $post );
-					}
-				}
-
-				$key = array_search( $group, $connection_map, true );
-				if ( ! in_array( $group, $successed_groups, true ) ) {
-					$successed_groups[] = $group;
-					update_post_meta( $post->ID, 'dt_connection_groups_pushed', $successed_groups );
-				}
-				if ( false !== $key || null !== $key ) {
-					unset( $connection_map[ $key ] );
-				}
-			}
-			if ( empty( $connection_map ) ) {
-				delete_post_meta( $post->ID, 'dt_connection_groups_pushing' );
-			} else {
-				update_post_meta( $post->ID, 'dt_connection_groups_pushing', $connection_map );
-			}
-		}
-	}
-
-	// Re-schedule a new event when there are still others to be distributed.
-	if ( $query->found_posts > $query->post_count ) {
-		wp_schedule_single_event( time(), 'dt_push_groups_hook' );
-	}
 }
 
 /**

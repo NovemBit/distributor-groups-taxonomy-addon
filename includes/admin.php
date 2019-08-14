@@ -156,10 +156,10 @@ function save_metabox( $post_id, $post ) {
 		}
 	}
 
-	/*TODO: find better place for this */
-	if ( ! wp_next_scheduled( 'dt_push_groups_hook' ) ) {
-		wp_schedule_single_event( time(), 'dt_push_groups_hook' );
-	}
+	/**
+	 * Fires after metabox save
+	 */
+	do_action( 'dt_groups_taxonomy_metabox_saved');
 }
 
 /**
