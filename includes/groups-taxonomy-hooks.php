@@ -115,7 +115,7 @@ function push_connection( $connection, $post ) {
 				);
 			} else {
 				$external_push_results[ (int) $connection['id'] ] = array(
-					'post_id' => (int) $remote_id,
+					'post_id' => $remote_id->get_error_message(),
 					'date'    => date( 'F j, Y g:i a' ),
 					'status'  => 'fail',
 				);
