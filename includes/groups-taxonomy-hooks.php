@@ -106,7 +106,6 @@ function push_connection( $connection, $post ) {
 					'date'    => date( 'F j, Y g:i a' ),
 					'status'  => 'success',
 				);
-				\Distributor\Logger\log( 'success', 'first push', $connection['id'], $post->ID, null, $post->post_type );
 				$external_connection->log_sync( array( $remote_id => $post->ID ) );
 			} elseif ( ! is_wp_error( $remote_id ) && 0 === (int) $remote_id ) {
 				$external_push_results[ (int) $connection['id'] ] = array(
@@ -114,14 +113,12 @@ function push_connection( $connection, $post ) {
 					'date'    => date( 'F j, Y g:i a' ),
 					'status'  => 'fail',
 				);
-				\Distributor\Logger\log( 'error', 'first push', $connection['id'], $post->ID, 'Can not set up remote id properly', $post->post_type );
 			} else {
 				$external_push_results[ (int) $connection['id'] ] = array(
 					'post_id' => (int) $remote_id,
 					'date'    => date( 'F j, Y g:i a' ),
 					'status'  => 'fail',
 				);
-				\Distributor\Logger\log( 'error', 'first push', $connection['id'], $post->ID, $remote_id->get_error_messages(), $post->post_type );
 			}
 		}
 	}
