@@ -134,6 +134,7 @@ function save_metabox( $post_id, $post ) {
 	if ( ! isset( $_POST['connection_groups_field'] ) || ! wp_verify_nonce( $_POST['connection_groups_field'], 'save_connection_groups' ) ) {
 		return;
 	}
+	$are_groups_updated = false;
 	$group_ids = $_POST['tax_input']['dt_ext_connection_group'] ?? array();
 	$groups    = array();
 	foreach ( $group_ids as $group_id ) {
@@ -149,17 +150,22 @@ function save_metabox( $post_id, $post ) {
 
 		if ( ! empty( $pushed_groups ) ) {
 			if ( ! empty( array_diff( $groups, $pushed_groups ) ) ) {
+				$are_groups_updated = true;
 				update_post_meta( $post_id, 'dt_connection_groups_pushing', array_diff( $groups, $pushed_groups ) );
 			}
 		} else {
+			$are_groups_updated = true;
 			update_post_meta( $post_id, 'dt_connection_groups_pushing', $groups );
 		}
 	}
 
 	/**
 	 * Fires after metabox save
+	 *
+	 * @param int  $post_id Post id
+	 * @param bool $are_groups_updated Whether groups updated or not
 	 */
-	do_action( 'dt_groups_taxonomy_metabox_saved');
+	do_action( 'dt_groups_taxonomy_metabox_saved', $post_id, $are_groups_updated );
 }
 
 /**
