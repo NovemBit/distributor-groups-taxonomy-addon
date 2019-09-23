@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Distributor Groups Taxonomy Add-on
  * Description:       Distribute posts in connection groups organized via Wordpress Taxonomies
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Novembit
  * Author URI:        https://novembit.com
  * License:           GPLv3 or later
@@ -12,6 +12,12 @@
  *
  * @package distributor-groups-taxonomy
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+define( 'DT_GROUPS_TAXONOMY_VERSION', '1.0.1' );
 
 /**
  * Bootstrap function

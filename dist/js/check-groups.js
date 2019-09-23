@@ -1,1 +1,21 @@
-"use strict";function _typeof(t){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}document.addEventListener("DOMContentLoaded",function(){var t=document.getElementById("active-groups-ids");if(void 0!==_typeof(t)&&null!==t&&void 0!==_typeof(t.dataset)&&null!==t.dataset){var o=t.dataset.groups;o&&void 0!==_typeof(o)&&null!==o&&(ids=JSON.parse(o),ids.map(function(t){var o=document.getElementById("in-dt_ext_connection_group-".concat(t));o.checked=!0,o.onclick=function(){return!1}}))}});
+document.addEventListener('DOMContentLoaded', function() {
+    const dataNode = document.getElementById('active-groups-ids');
+    if (
+        typeof dataNode !== undefined &&
+        dataNode !== null &&
+        typeof dataNode.dataset !== undefined &&
+        dataNode.dataset !== null
+    ) {
+        const groupsData = dataNode.dataset.groups;
+        if (groupsData && typeof groupsData !== undefined && groupsData !== null) {
+            let ids = JSON.parse(groupsData);
+            ids.map(id => {
+                let checkBox = document.getElementById(
+                    `in-dt_ext_connection_group-${id}`
+                );
+                checkBox.checked = true;
+                checkBox.onclick = () => false;
+            });
+        }
+    }
+});
