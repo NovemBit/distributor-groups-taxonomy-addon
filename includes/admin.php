@@ -23,17 +23,17 @@ function setup_groups() {
 	);
 
 	$taxonomy_labels = array(
-		'name'              => esc_html__( 'External Connection Groups' ),
-		'singular_name'     => esc_html__( 'External Connection Group' ),
-		'search_items'      => esc_html__( 'Search External Connection Groups' ),
-		'popular_items'     => esc_html__( 'Popular External Connection Groups' ),
-		'all_items'         => esc_html__( 'All External Connection Groups' ),
-		'parent_item'       => esc_html__( 'Parent External Connection Group' ),
-		'parent_item_colon' => esc_html__( 'Parent External Connection Group' ),
-		'edit_item'         => esc_html__( 'Edit External Connection Group' ),
-		'update_item'       => esc_html__( 'Update External Connection Group' ),
-		'add_new_item'      => esc_html__( 'Add New External Connection Group' ),
-		'new_item_name'     => esc_html__( 'New External Connection Group Name' ),
+		'name'              => esc_html__( 'Connection Groups' ),
+		'singular_name'     => esc_html__( 'Connection Group' ),
+		'search_items'      => esc_html__( 'Search Connection Groups' ),
+		'popular_items'     => esc_html__( 'Popular Connection Groups' ),
+		'all_items'         => esc_html__( 'All Connection Groups' ),
+		'parent_item'       => esc_html__( 'Parent Connection Group' ),
+		'parent_item_colon' => esc_html__( 'Parent Connection Group' ),
+		'edit_item'         => esc_html__( 'Edit Connection Group' ),
+		'update_item'       => esc_html__( 'Update Connection Group' ),
+		'add_new_item'      => esc_html__( 'Add New Connection Group' ),
+		'new_item_name'     => esc_html__( 'New Connection Group Name' ),
 
 	);
 	$args = array(
@@ -60,8 +60,8 @@ function add_submenu_item() {
 	$link = admin_url( 'edit-tags.php' ) . '?taxonomy=dt_ext_connection_group&post_type=dt_ext_connection';
 	add_submenu_page(
 		'distributor',
-		esc_html__( 'External Connection Groups', 'distributor' ),
-		esc_html__( 'External Connection Groups', 'distributor' ),
+		esc_html__( 'Connection Groups', 'distributor' ),
+		esc_html__( 'Connection Groups', 'distributor' ),
 		'manage_options',
 		$link
 	);
@@ -82,7 +82,7 @@ function init_metabox() {
 function add_metabox() {
 	add_meta_box(
 		'external-connection-groups',
-		__( 'External Connection Groups', 'distributor' ),
+		__( 'Connection Groups', 'distributor' ),
 		__NAMESPACE__ . '\render_metabox',
 		\DT\NbAddon\GroupsTaxonomy\Utils\get_distributable_custom_post_types(),
 		'side',
