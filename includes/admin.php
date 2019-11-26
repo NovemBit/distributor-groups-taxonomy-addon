@@ -84,7 +84,7 @@ function add_metabox() {
 		'external-connection-groups',
 		__( 'Connection Groups', 'distributor' ),
 		__NAMESPACE__ . '\render_metabox',
-		\DT\NbAddon\GroupsTaxonomy\Utils\get_distributable_custom_post_types(),
+		\DT\NbAddon\Brandlight\Utils\get_distributable_custom_post_types(),
 		'side',
 		'high'
 	);
@@ -124,7 +124,7 @@ function save_metabox( $post_id, $post ) {
 	if ( wp_is_post_revision( $post_id ) ) {
 		return;
 	}
-	if ( ! in_array( $post->post_type, \DT\NbAddon\GroupsTaxonomy\Utils\get_distributable_custom_post_types(), true ) ) {
+	if ( ! in_array( $post->post_type, \DT\NbAddon\Brandlight\Utils\get_distributable_custom_post_types(), true ) ) {
 		return;
 	}
 	if ( 'auto-draft' === $post->post_status ) {
