@@ -76,9 +76,11 @@ class ExternalConnectionGroups {
 	 */
 	public function groups_checklist( $taxonomy, $post_id, $connection_page = false ) {
 		?>
-		<ul>
-			<?php wp_terms_checklist( $post_id, [ 'taxonomy' => $taxonomy ] ); ?>
-		</ul>
+		<div class="categorydiv">
+			<ul class="categorychecklist form-no-clear" id="dist-group-checklist">
+				<?php wp_terms_checklist( $post_id, [ 'taxonomy' => $taxonomy, 'checked_ontop' => false ] ); ?>
+			</ul>
+		</div>
 		<?php
 		if ( ! $connection_page ) {
 			$this->distributed_groups( $post_id );
