@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'DT_GROUPS_TAXONOMY_VERSION', '1.0.1' );
+define( 'DT_GROUPS_TAXONOMY_VERSION', '1.0.2' );
 
 /**
  * Bootstrap function
