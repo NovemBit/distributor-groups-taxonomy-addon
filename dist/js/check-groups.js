@@ -18,9 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-	let expand = document.getElementById('dist-group-checklist').querySelector('.is-parent');
+	let expand = document.getElementById('dist-group-checklist').querySelectorAll('.is-parent');
 	if(expand){
-		expand.classList.add("open");
+		for( item of expand ){
+			item.classList.add("open");
+		}
 	}
 	const chbs = document.getElementById('dist-group-checklist').querySelectorAll('input[type=checkbox]');
 	for (let i = 0; i < chbs.length; i++) {
