@@ -185,7 +185,7 @@ function add_external_connection_details( $post ) {
  * @param string $hook Current hook
  */
 function add_groups_check_scripts( $hook ) {
-	if ( 'post.php' === $hook ) {
+	if ( 'post.php' === $hook || 'post-new.php' === $hook ) {
 		wp_enqueue_script( 'dt_check_groups', plugins_url( '/dist/js/check-groups.js', __DIR__ ), array(), DT_GROUPS_TAXONOMY_VERSION, true );
 	}
 }
