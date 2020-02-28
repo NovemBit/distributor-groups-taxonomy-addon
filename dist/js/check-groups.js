@@ -18,4 +18,21 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+	let expand = document.getElementById('dist-group-checklist').querySelector('.is-parent');
+	if(expand){
+		expand.classList.add("open");
+	}
+	const chbs = document.getElementById('dist-group-checklist').querySelectorAll('input[type=checkbox]');
+	for (let i = 0; i < chbs.length; i++) {
+		chbs[i].onclick = function () {
+			let childes = this.parentElement.parentElement.querySelectorAll('input[type=checkbox]');
+			for (let j = 0; j < childes.length; j++) {
+				if (this.checked) {
+					childes[j].checked = true;
+				} else {
+					childes[j].checked = false;
+				}
+			}
+		}
+	}
 });
